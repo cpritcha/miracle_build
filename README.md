@@ -8,3 +8,5 @@ project, arranged like shown below.
 user% ls
 build   miracle   miraclelog
 ```
+
+Based off of https://github.com/jackdb/pg-app-dev-vm
