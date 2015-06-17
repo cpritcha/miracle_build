@@ -14,7 +14,8 @@ PG_VERSION=9.4
 # Changes below this line are probably not necessary
 ###########################################################
 print_db_usage () {
-  echo "Your PostgreSQL database has been setup and can be accessed on your local machine on the forwarded port (default: 15432)"
+  echo "Your PostgreSQL database can be accessed on your local machine on the forwarded port (default: 15432)"
+  echo "Example connection information"
   echo "  Host: localhost"
   echo "  Port: 15432"
   echo "  Database: $APP_DB_NAME"
@@ -80,18 +81,6 @@ echo "client_encoding = utf8" >> "$PG_CONF"
 
 # Restart so that all new config is loaded:
 service postgresql restart
-
-cat << EOF | su - postgres -c psql
--- Create the database user:
-CREATE USER $APP_DB_USER WITH PASSWORD '$APP_DB_PASS';
-
--- Create the database:
-CREATE DATABASE $APP_DB_NAME WITH OWNER=$APP_DB_USER
-                                  LC_COLLATE='en_US.utf8'
-                                  LC_CTYPE='en_US.utf8'
-                                  ENCODING='UTF8'
-                                  TEMPLATE=template0;
-EOF
 
 # Tag the provision time:
 date > "$PROVISIONED_ON"
